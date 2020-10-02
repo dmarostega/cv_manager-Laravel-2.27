@@ -1,0 +1,7 @@
+
+/*
+  fonts.css
+*/
+  @font-face {font-family: "Quicksand";
+    src: url("/resources/fonts/Quicksand-Light") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/   
+  }

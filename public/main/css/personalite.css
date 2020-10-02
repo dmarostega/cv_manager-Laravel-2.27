@@ -1,0 +1,378 @@
+/*
+    reset.css
+*/
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+/*
+    personalite.css
+*/
+
+body{
+    width: 64em;
+    margin: 0 auto;
+    /* font-family: 'BR Firma', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+    /* font-size: 15px; */
+    /* font-weight: 500; */
+    font-family:  Verdana, 'Quicksand', sans-serif;
+    color: rgb(255, 255, 255);
+    line-height: 1.3em;
+}
+
+article{
+    border-radius: .1em;
+    margin-bottom: 1.5em;
+}
+
+main{
+    margin:auto;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;   
+}
+
+
+
+footer{
+    background: black;
+    color: rgba(178, 178, 178, 0.58);
+    height: 50px;
+}
+
+body > header:first-child {
+    background-color: rgb(41,42,53);
+}
+
+section article:not(.bg-default), aside article:not(.bg-default){
+    background-color: rgb(41,42,53);   
+}
+
+header nav {
+    display: inline-block;
+    padding: 1em 0;
+    width: 815px;
+}
+
+header nav ul{
+    text-align: right;
+}
+
+header nav ul li{
+    display: inline-block;
+    text-align: center;
+    padding: 0 15px;
+    text-transform: capitalize;
+}
+
+article:not(.bg-default) header {
+    font-size: 1.2em;
+    padding: .7em 1em;
+    font-weight: 500;
+    box-sizing: border-box;
+
+}
+
+article:not(.bg-default) main {
+    padding:0 1.5em 1.4em ;
+    font-weight: 500;
+    color: rgb(171, 172, 166);
+    font-size: .8em;  
+    box-sizing: border-box;
+}
+
+footer p{
+    font-size: 12px;
+    line-height: 50px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* Layouts */
+.bg-default{
+    background-color: black;
+}
+
+.label-progress{
+    display: block;
+    margin: 1em 0;
+}
+
+.label-progress *:first-child{
+    color: inherit;
+    font-weight:600;
+    margin: 0;
+}
+
+.label-progress progress{
+    width: 100%;
+}
+
+.no-margin{
+    margin: 0;
+}
+/*
+    Presentation Section
+*/
+.presentation header > div{
+    display: inline-block;
+    min-height: 12em;
+    box-sizing: border-box;
+    margin:2em;
+    vertical-align: bottom;
+    /* border: 1px solid red; */
+}
+
+.presentation img{
+    display: block;
+    background-size: 12em cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 12em;
+    height: 12em;
+    border:inherit;
+    border-radius:  50%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.presentation header > div:first-child{
+    border-radius: 50%;
+    width: 12em;
+    /* border: 1px solid #ddd; */
+}
+.presentation header > div:last-child{
+    padding-top: 3em;
+}
+.presentation .l-social-resume{
+    margin-top: 1.25em;
+}
+
+.presentation .l-social-resume > *{
+    display: inline-block;
+}
+
+.h-social-icons li{
+    display: inline-block; 
+    padding: 0 .2em;   
+    vertical-align: middle; 
+}
+
+/*  Personal Info Secttion  */
+.table-personal-info tr td:first-child{
+    text-align: right;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.table-personal-info td{
+    padding: .5em .8em;
+}
+
+.table-personal-info address p{
+    margin: 0;
+}
+
+/*  Personal Contact Section    */
+.personal-contact p{
+    margin: 0;
+}
+
+.personal-contact form{
+    margin-top: 1.2em;
+}
+
+form > div{
+    box-sizing: border-box;
+    padding: 1em;
+}
+
+form > div > *{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+form label{
+    width: 7em;
+    font-size: 1.2em;
+    text-align: right;
+    padding-right: 1em;
+    box-sizing: border-box;
+
+}
+
+form label + div{
+    width: 32.6em;
+    padding: .5em 0;
+    border: 1px solid #484848;
+    border-radius: .3em;
+    box-sizing: border-box;
+
+}
+
+form input[type=text], form textarea{    
+    width: 100%;
+    padding: inherit;
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    border: transparent;
+    box-sizing: border-box;
+    /* pointer-events: none; */
+}
+
+form input[type=text]:change{
+    border: transparent;
+}
+
+form input[type=submit]{
+    width: 12em;
+    margin: 0 auto;
+    color: white;
+    background-color:rgb(52, 165, 71);
+    border: 1px solid rgb(52, 165, 71);
+   
+    /* float: right;
+    clear: both;
+    overflow: none; */
+}
+
+/*  Buttons */
+.btn{
+    padding: .5em 3em;
+    border-radius: .3em;   
+    background-color:transparent;
+    color: rgba(117, 108, 108, 0.39);
+    box-shadow: none;
+    border: 1px solid #484848;
+}
+
+.btn:hover{
+    background-color: rgb(113, 113, 119);
+}
+
+.btn-disabled{
+    background-color:transparent;
+    /* color: rgba(88, 87, 85, 0.39); */
+}
+
+.btn-disabled:hover{
+    background-color: inherit;
+    cursor: default;
+}
+
+/*  sections page */
+aside{
+    width: 23em;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 1em;
+}
+
+.main-section{
+    width: 38em;
+    display: inline-block;
+    margin-left: 1em;
+}
+
+/* cards */
+main h2 {
+    font-size: 1.3em;
+}
+
+main h4 {
+   color: rgb(26, 116, 168);
+   font-weight: unset;
+}
+
+/*  tables  */
+.table tr{
+    padding-bottom: 1em;
+}
+
+.table td.period{
+    padding: 0 2em;
+}
+
+.period p{  
+   background-color: rgb(26, 116, 168);
+   padding: .4em .8em;
+   width: 60%;
+   margin: 0 auto;
+   margin-top: .3em;
+   text-align: center;
+   border-radius: .3em;
+}
+
+main p{
+    margin-top: 1em;
+}
+
+/*  GRID    */
+
+.row{
+    width: inherit;
+}
+
+.row .col{
+    display: inline-block;
+    vertical-align: top;
+    width: calc(50% - 1.3em);
+}
+
+.w-25{
+    width: 25% !important; 
+}
+
+.w-75{
+    width: calc(75% - 1.3em) !important; 
+}
+/*  RC Icons  */
+.rc{
+    display: block;
+    width: 2em;
+    height: 2em;
+    background-size: contain ;
+    background-image: url(/resources/images/icons/facebook.png);
+}
+
+.rc-linkedin{
+    background-image: url(/resources/images/icons/linkedin.png);
+}
+
+.rc-facebook{
+    background-image: url(/resources/images/icons/facebook.png);
+}
+
+.rc-github{
+    background-image: url(/resources/images/icons/github.png);
+}
+
+.rc-instagram{
+    background-image: url(/resources/images/icons/instagram.png);
+}
+
+/*  errors */
+.error{    
+    font-size:10px !important;
+    color: red;
+    padding:3px;
+    display:inline-block;    
+}
+
+/*
+  fonts.css
+*/
+  @font-face {font-family: "Quicksand";
+    src: url("/resources/fonts/Quicksand-Light") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/   
+  }
