@@ -5,7 +5,7 @@
 @section('content')
     <form action="{{ route('my_profile') }}" method="post">
         <div class="row">            
-            <div class="col-2" style="border: 1px solid green">
+            <div class="col-2">
                 <div class="img-editable">
                     <img src="{{ URL::asset('main/images/ElvisPresley.jpg') }}" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">                    
                 </div>    

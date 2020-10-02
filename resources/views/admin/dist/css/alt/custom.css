@@ -1,26 +1,49 @@
 div.img-editable{
-    position: relative;
-    /* border: 1px solid  red; */
-    border-radius: 50%;    
-    /* margin: 10px; */
+    position: relative;    
+    border-radius: 50%;  
+    box-sizing: border-box;
+    margin: 0 auto;
+    width: 15em;  
+    height: 15em;
 }
 
-div.img-editable img{
-    display: inline-block;
-    width: inherit;
-    height: inherit;
+div.img-editable img{  
+    display: block;
     border-radius: 50%;    
-    max-height: 15em;
+    height: inherit;
+    width: 100%;
+}
+
+div.img-editable:before{
+    content: "";
+    border-radius: 50%;    
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    transition: all .5s;
 }
 
 div.img-editable:hover:before{    
-    content: "";
-    position:absolute;
-    bottom:0;
-    right: 50%;
-    display: block;
-    width: 32px;
-    height: 32px;
-    background-color: blue; 
-    border-color: blue; 
+    background: rgba(0,0,0,.5);
 }
+div.img-editable:after{
+    transition: all .5s;
+    opacity: 0;
+}
+
+div.img-editable:hover:after{    
+    content: "Alterar";
+    display: block;
+    position: absolute;
+    border: 3px solid white;
+    color: white;
+    top: 50%;
+    left: 50%;
+    padding: 5px 15px;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
