@@ -86,6 +86,7 @@ Route::group([
     Route::resource('user','UserController');
 
     Route::get('my_profile', 'ProfileController@index')->name('my_profile');
+    Route::post('my_profile/{profile}', 'ProfileController@update')->name('my_profile.update');
 
     Route::get('logout-custom', function(){
         Auth::logout();

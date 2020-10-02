@@ -12,18 +12,18 @@
 /*# sourceMappingURL=adminlte.min.css.map */
 div.img-editable{
     position: relative;    
-    border-radius: 50%;  
+    border-radius: 50%;   
     box-sizing: border-box;
     margin: 0 auto;
-    width: 15em;  
-    height: 15em;
-}
+    width: 100%; 
+    max-height: 15em;
+} 
 
 div.img-editable img{  
     display: block;
-    border-radius: 50%;    
-    height: inherit;
-    width: 100%;
+    border-radius: 50%;  
+    max-height: 15em;
+    width: 100%; 
 }
 
 div.img-editable:before{

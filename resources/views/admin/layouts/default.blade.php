@@ -69,6 +69,8 @@
                 type: 'get',
                 success: function(response){
                     var cities_element = $('select#city_id');
+                        cities_element.empty()
+                                      .append('<option selected="selected" value="">Select</option>')
 
                     for(i=0; i<response.length; i++){
                        $('select#city_id').append('<option value="'+response[i].id+'">'+response[i].name+'</option>');

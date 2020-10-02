@@ -3,11 +3,16 @@
 @section('title','My Profile')
 
 @section('content')
-    <form action="{{ route('my_profile') }}" method="post">
+    <form action="{{ route('my_profile.update',['profile' => $profile->id]) }}" method="post">
+        @csrf
         <div class="row">            
             <div class="col-2">
                 <div class="img-editable">
-                    <img src="{{ URL::asset('main/images/ElvisPresley.jpg') }}" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">                    
+                    <img src="{{ URL::asset('main/images/ElvisPresley.jpg') }}" >
+                    {{-- <div class="form-group">
+                        <label for="my-input">Text</label>
+                        <input id="my-input" class="form-control-file" type="file" name="">
+                    </div>                     --}}
                 </div>    
             </div>
             <div class="col-10">
@@ -67,7 +72,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="profile-address">Place</span>
                         </div>
-                        <input class="form-control" type="text" name="address" aria-describedby="profile-address" value="{{ '' }}">
+                        <input class="form-control" type="text" name="address" aria-describedby="profile-address" value="{{ ( $address !== null ? $address->public_place : '') }}">
                     </div>
                 </div>      
             </div>
@@ -77,7 +82,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="address-number">N.</span>
                         </div>
-                        <input class="form-control" type="text" name="number" aria-describedby="address-number" value="{{ '' }}">
+                        <input class="form-control" type="text" name="number" aria-describedby="address-number" value="{{  ( $address !== null ? $address->number : '')  }}">
                     </div>
                 </div>      
             </div>
@@ -90,7 +95,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="address-complement">Complement</span>
                         </div>
-                        <input class="form-control" type="text" name="complement" aria-describedby="address-complement" value="{{ '' }}">
+                        <input class="form-control" type="text" name="complement" aria-describedby="address-complement" value="{{   ( $address !== null ? $address->complement : '')  }}">
                     </div>
                 </div>      
             </div>
@@ -100,7 +105,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="address-zip_code">Zip Code</span>
                         </div>
-                        <input class="form-control" type="text" name="zip_code" aria-describedby="address-zip_code" value="{{ '' }}">
+                        <input class="form-control" type="text" name="zip_code" aria-describedby="address-zip_code" value="{{  ( $address !== null ? $address->zip_code : '')  }}">
                     </div>
                 </div>      
             </div>
@@ -113,7 +118,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="address-district">District</span>
                         </div>
-                        <input class="form-control" type="text" name="district" aria-describedby="address-district" value="{{ '' }}">
+                        <input class="form-control" type="text" name="district" aria-describedby="address-district" value="{{  ( $address !== null ? $address->district : '')  }}">
                     </div>
                 </div>      
             </div>            
@@ -124,7 +129,11 @@
                 <div class="form-group">
                     <label for="city_id">City</label>
                     <select id="city_id" class="custom-select" name="city_id" disabled>
-                        <option value="">Select State</option>
+                        @if($my_city !== null)
+                            <option value="{{ $my_city->id }}">{{ $my_city->name }}</option>
+                        @else
+                            <option value="">Select State</option>
+                        @endif
                     </select>
                 </div>
             </div>            
@@ -134,11 +143,12 @@
                     <select id="state_id" class="custom-select" name="state_id" >
                         <option value="">Select</option>
                         @foreach($states as $state)
-                           <option value="{{ $state->id }}">{{ $state->name }}</option>
+                           <option value="{{ $state->id }}" @if($my_city !== null && $my_city->state_id === $state->id) selected @endif> {{ $state->name }} </option>
                         @endforeach
                     </select>
                 </div>
             </div>
         </div> 
+        <input type="submit" value="Salvar">
     </form>
 @endsection
