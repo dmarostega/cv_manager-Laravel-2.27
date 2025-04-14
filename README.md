@@ -16,4 +16,4 @@ Funcionalidades
 
 Recursos
 - Laravle 7
-- CSS Puro
+- CSS Puro 
