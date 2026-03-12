@@ -15,5 +15,5 @@ Funcionalidades
 - Apresentação (/resources/views/main)  
 
 Recursos
-- Laravle 7
+- Laravel 7
 - CSS Puro 
