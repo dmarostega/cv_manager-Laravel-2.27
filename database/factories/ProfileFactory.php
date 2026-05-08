@@ -1,12 +1,21 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Models\Profile;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Profile::class, function (Faker $faker) {
-    return [
-        'title' => $faker->title()
-    ];
-});
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Profile>
+ */
+class ProfileFactory extends Factory
+{
+    protected $model = Profile::class;
+
+    public function definition(): array
+    {
+        return [
+            'title' => fake()->title(),
+        ];
+    }
+}

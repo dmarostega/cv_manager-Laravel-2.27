@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
 {
+    use HasFactory;
+
 
     protected $tablename = 'people';
     //
@@ -15,7 +18,7 @@ class Person extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'last_name'
+        'name', 'last_name', 'birthday'
     ];
 
     protected $casts = [
