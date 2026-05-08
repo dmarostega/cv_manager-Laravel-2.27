@@ -20,7 +20,7 @@ class CreateProfileHasSocialMedia extends Migration
             $table->string('link',200);            
             $table->timestamps();
 
-            $table->foreign('profile_id')->references('id')->on('profile');
+            $table->foreign('profile_id')->references('id')->on('profiles');
             $table->foreign('social_media_id')->references('id')->on('social_media');
         });
     }
@@ -33,8 +33,8 @@ class CreateProfileHasSocialMedia extends Migration
     public function down()
     {
         Schema::table('profile_has_social_media', function (Blueprint $table) {
-            $table->dropForeign('profile_id');
-            $table->dropForeign('social_media_id');
+            $table->dropForeign(['profile_id']);
+            $table->dropForeign(['social_media_id']);
         });
         
         Schema::dropIfExists('profile_has_social_media');

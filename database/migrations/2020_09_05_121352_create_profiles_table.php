@@ -18,10 +18,10 @@ class CreateProfilesTable extends Migration
             $table->string('title',100);
             $table->timestamps();
 
-            $table->unsignedInteger('profile_type_id');
+            $table->unsignedBigInteger('profile_type_id');
             $table->foreign('profile_type_id')->references('id')->on('profile_types');
 
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
@@ -33,8 +33,11 @@ class CreateProfilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropForeign('profile_type_id');
-        Schema::dropForeign('user_id');
+        Schema::table('profiles', function (Blueprint $table) {
+            $table->dropForeign(['profile_type_id']);
+            $table->dropForeign(['user_id']);
+        });
+
         Schema::dropIfExists('profiles');
     }
 }

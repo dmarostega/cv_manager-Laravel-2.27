@@ -2,140 +2,90 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use App\Models\Skill;
 use App\Models\ProfileHasSkill;
+use App\Models\Skill;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProfileHasSkillController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return view('admin.profile_skill.index',[
+        return view('admin.profile_skill.index', [
             'my_skills' => DB::table('profile_has_skills')
-                            ->join('skills','skills.id','=','profile_has_skills.skill_id')
-                            ->where('profile_id','=', User::find(   Auth::user()->id   )->Profile()->first()->id )
-                            ->select('profile_has_skills.*','skills.name')
-                            ->get()
+                ->join('skills', 'skills.id', '=', 'profile_has_skills.skill_id')
+                ->where('profile_id', $this->currentProfile()->id)
+                ->select('profile_has_skills.*', 'skills.name')
+                ->orderByDesc('knowledge_percent')
+                ->get(),
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('admin.profile_skill.create',[
-            'skills' => Skill::all()
+        return view('admin.profile_skill.create', [
+            'skills' => Skill::orderBy('name')->get(),
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'skill_id' => 'required',
-            'knowledge_percent' => 'required|numeric'
+            'skill_id' => 'required|exists:skills,id',
+            'knowledge_percent' => 'required|numeric|min:0|max:100',
         ]);
 
         $my_skill = new ProfileHasSkill();
-
-        $my_skill->profile_id = User::find( Auth::user()->id)->Profile()->first()->id;
+        $my_skill->profile_id = $this->currentProfile()->id;
         $my_skill->skill_id = $request->skill_id;
         $my_skill->knowledge_percent = $request->knowledge_percent;
-
         $my_skill->save();
 
-        return redirect()->route('my_skill.index');
+        return redirect()->route('my_skill.index')->with('success', 'Habilidade vinculada com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\\ProfileHasSkill  $profileHasSkill
-     * @return \Illuminate\Http\Response
-     */
     public function show(ProfileHasSkill $my_skill)
     {
-        if($my_skill->profile_id === User::find(    Auth::user()->id    )->Profile()->first()->id ){
-            return view('admin.profile_skill.show',[
-                'my_skill' => DB::table('profile_has_skills')
-                                ->join('skills','skills.id','=','profile_has_skills.skill_id')
-                                ->where('profile_id','=',User::find(    Auth::user()->id    )->Profile()->first()->id)
-                                ->first()
-            ]);
-        }
+        $this->authorizeProfileRecord($my_skill);
+        $my_skill->load('Skill');
+
+        return view('admin.profile_skill.show', [
+            'my_skill' => $my_skill,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\\ProfileHasSkill  $profileHasSkill
-     * @return \Illuminate\Http\Response
-     */
     public function edit(ProfileHasSkill $my_skill)
     {
-        $skil =  Skill::find($my_skill->skill_id);
-        $my_skill->name =  $skil->name;
+        $this->authorizeProfileRecord($my_skill);
+        $my_skill->name = optional($my_skill->Skill()->first())->name;
 
-        if($my_skill->profile_id === User::find(    Auth::user()->id    )->Profile()->first()->id ){
-            return view('admin.profile_skill.edit',[
-                'my_skill' => $my_skill,
-                'skills' => Skill::all()
-            ]);
-        }
+        return view('admin.profile_skill.edit', [
+            'my_skill' => $my_skill,
+            'skills' => Skill::orderBy('name')->get(),
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\\ProfileHasSkill  $profileHasSkill
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, ProfileHasSkill $my_skill)
-    {       
+    {
+        $this->authorizeProfileRecord($my_skill);
+
         $request->validate([
-            'skill_id' => 'required',
-            'knowledge_percent' => 'required|numeric'
+            'skill_id' => 'required|exists:skills,id',
+            'knowledge_percent' => 'required|numeric|min:0|max:100',
         ]);
 
-        if($my_skill->profile_id === User::find(    Auth::user()->id    )->Profile()->first()->id ) {
-            $my_skill->skill_id = $request->skill_id;
-            $my_skill->knowledge_percent = $request->knowledge_percent;
+        $my_skill->skill_id = $request->skill_id;
+        $my_skill->knowledge_percent = $request->knowledge_percent;
+        $my_skill->save();
 
-            $my_skill->save();
-        }
-
-        return redirect()->route('my_skill.index');
+        return redirect()->route('my_skill.index')->with('success', 'Habilidade atualizada com sucesso.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\\ProfileHasSkill  $profileHasSkill
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(ProfileHasSkill $my_skill)
     {
-        if($my_skill->profile_id === User::find( Auth::user()->id  )->Profile()->first()->id ){
-            $my_skill->delete();
-        }
+        $this->authorizeProfileRecord($my_skill);
+        $my_skill->delete();
 
-        return redirect()->route('my_skill.index');
+        return redirect()->route('my_skill.index')->with('success', 'Habilidade removida com sucesso.');
     }
 }

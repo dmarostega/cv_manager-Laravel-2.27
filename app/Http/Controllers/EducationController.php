@@ -2,134 +2,91 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use App\Models\Education;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 
 class EducationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $educations = Education::where('profile_id','=',    User::find( Auth::user()->id )->Profile()->first()->user_id )->get();
-
-        return view('admin.education.index',[
-            'educations' => $educations
+        return view('admin.education.index', [
+            'educations' => Education::where('profile_id', $this->currentProfile()->id)->orderByDesc('period_init')->get(),
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('admin.education.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'institution' => 'required'
+            'institution' => 'required|max:255',
+            'period_init' => 'required|date',
+            'period_end' => 'required|date|after_or_equal:period_init',
         ]);
 
         $education = new Education();
+        $this->fillEducation($education, $request);
+        $education->profile_id = $this->currentProfile()->id;
+        $education->save();
+
+        return redirect()->route('education.index')->with('success', 'Formação cadastrada com sucesso.');
+    }
+
+    public function show(Education $education)
+    {
+        $this->authorizeProfileRecord($education);
+
+        return view('admin.education.show', [
+            'education' => $education,
+        ]);
+    }
+
+    public function edit(Education $education)
+    {
+        $this->authorizeProfileRecord($education);
+
+        return view('admin.education.edit', [
+            'education' => $education,
+        ]);
+    }
+
+    public function update(Request $request, Education $education)
+    {
+        $this->authorizeProfileRecord($education);
+
+        $request->validate([
+            'institution' => 'required|max:255',
+            'period_init' => 'required|date',
+            'period_end' => 'required|date|after_or_equal:period_init',
+        ]);
+
+        $this->fillEducation($education, $request);
+        $education->save();
+
+        return redirect()->route('education.index')->with('success', 'Formação atualizada com sucesso.');
+    }
+
+    public function destroy(Education $education)
+    {
+        $this->authorizeProfileRecord($education);
+        $education->delete();
+
+        return redirect()->route('education.index')->with('success', 'Formação removida com sucesso.');
+    }
+
+    private function fillEducation(Education $education, Request $request): void
+    {
         $education->title = $request->title;
         $education->institution = $request->institution;
         $education->formation = $request->formation;
         $education->study_area = $request->study_area;
         $education->activities = $request->activities;
-        $education->note = (double) $request->note;
+        $education->note = $request->note !== null ? (double) $request->note : null;
         $education->description = $request->description;
         $education->period_init = $request->period_init;
         $education->period_end = $request->period_end;
-
-        $education->profile_id = User::find(    Auth::user()->id  )->Profile()->first()->user_id;
-        $education->save();
-        
-        return Redirect()->route('education.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Education  $education
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Education $education)
-    {
-        if($education !== null){
-            return view('admin.education.show',[
-                'education' => $education
-            ]);
-        }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Education  $education
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Education $education)
-    {
-        return view('admin.education.edit',[
-            'education' => $education
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Education  $education
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Education $education)
-    {
-        $request->validate([
-            'institution' => 'required'
-        ]);
-        
-        if($request){
-            $education->title = $request->title;
-            $education->institution = $request->institution;
-            $education->formation = $request->formation;
-            $education->study_area = $request->study_area;
-            $education->activities = $request->activities;
-            $education->note = (double) $request->note;
-            $education->description = $request->description;
-            $education->period_init = $request->period_init;
-            $education->period_end = $request->period_end;
-
-            $education->save();
-        }
-
-        return redirect()->route('education.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Education  $education
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Education $education)
-    {
-        $education->delete();
-        return redirect()->route('education.index');
     }
 }

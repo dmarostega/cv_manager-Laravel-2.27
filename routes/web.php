@@ -19,7 +19,9 @@ use Illuminate\Support\Facades\Auth;
   //  Route::resource('products', 'HomeController')->middleware(['auth', 'check.is.admin']);
  
 
-Route::get('/','Homecontroller@index')->name('index');
+Route::get('/', 'HomeController@index')->name('index');
+Route::get('/curriculo/{profile}', 'HomeController@show')->name('public.resume');
+Route::get('/u/{user}', 'HomeController@showByUser')->name('public.resume.user');
 
 
 /*  JSON Routes  */

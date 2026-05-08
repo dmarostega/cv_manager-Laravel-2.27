@@ -40,8 +40,8 @@ class CreateAddressesTable extends Migration
     public function down()
     {
         Schema::table('addresses', function (Blueprint $table) {
-            $table->dropForeign('city_id');
-            $table->dropForeign('profile_id');
+            $table->dropForeign(['city_id']);
+            $table->dropForeign(['profile_id']);
         });
         
         Schema::dropIfExists('addresses');

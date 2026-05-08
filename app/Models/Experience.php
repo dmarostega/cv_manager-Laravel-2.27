@@ -9,11 +9,16 @@ class Experience extends Model
     protected $table = 'experiences';
 
     protected $fillable = [
-        'period_end'
+        'period_end',
     ];
 
     protected $casts = [
         'period_init' => 'datetime:d/m/Y',
-        'period_end' => 'datetime:d/m/Y'
+        'period_end' => 'datetime:d/m/Y',
     ];
+
+    public function Profile()
+    {
+        return $this->belongsTo(Profile::class, 'profile_id', 'id');
+    }
 }

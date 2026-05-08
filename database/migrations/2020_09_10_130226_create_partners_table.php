@@ -34,7 +34,7 @@ class CreatePartnersTable extends Migration
     public function down()
     {
         Schema::table('profiles', function (Blueprint $table) {
-            $table->dropForeign('profile_id');
+            $table->dropForeign(['profile_id']);
         });
         Schema::dropIfExists('partners');
     }

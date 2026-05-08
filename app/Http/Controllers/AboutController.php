@@ -3,67 +3,72 @@
 namespace App\Http\Controllers;
 
 use App\Models\About;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 
-use DB;
 class AboutController extends Controller
 {
-    //
-    public function index(){
-        $abouts = About::where('profile_id','=',User::find(  Auth::user()->id )->Profile()->first()->id )->get();
+    public function index()
+    {
         return view('admin.about.index', [
-            'abouts' => $abouts
+            'abouts' => About::where('profile_id', $this->currentProfile()->id)->get(),
         ]);
     }
 
-    public function create(){
+    public function create()
+    {
         return view('admin.about.create');
     }
 
-    public function store(Request $request){
-
+    public function store(Request $request)
+    {
         $request->validate([
-            'title' => ['required','max:50'],
-            'text' => ['required']
+            'title' => ['required', 'max:50'],
+            'text' => ['required'],
         ]);
 
         $about = new About();
         $about->title = $request->title;
         $about->text = $request->text;
-
-        $about->profile_id = User::find(  Auth::user()->id  )->Profile()->first()->user_id;
+        $about->image = $request->image ?: 'default.png';
+        $about->is_main = $request->has('is_main') ? 1 : 0;
+        $about->profile_id = $this->currentProfile()->id;
         $about->save();
 
-
-       return Redirect()->route('about.index');
+        return redirect()->route('about.index')->with('success', 'Resumo cadastrado com sucesso.');
     }
 
-    public function edit(About $about){
-        return view('admin.about.edit',[
-            'about' => $about
+    public function edit(About $about)
+    {
+        $this->authorizeProfileRecord($about);
+
+        return view('admin.about.edit', [
+            'about' => $about,
         ]);
     }
 
-    public function update(About $about, Request $request){
+    public function update(About $about, Request $request)
+    {
+        $this->authorizeProfileRecord($about);
 
         $request->validate([
-            'title' => ['required','max:50'],
-            'text' => ['required']
+            'title' => ['required', 'max:50'],
+            'text' => ['required'],
         ]);
 
-        if(!empty($request->title) && !empty($request->title)){
-            $about->title = $request->title;
-            $about->text = $request->text;
-            $about->save();
-        }
-        return Redirect()->route('about.index');        
+        $about->title = $request->title;
+        $about->text = $request->text;
+        $about->image = $request->image ?: $about->image;
+        $about->is_main = $request->has('is_main') ? 1 : 0;
+        $about->save();
+
+        return redirect()->route('about.index')->with('success', 'Resumo atualizado com sucesso.');
     }
 
-    public function destroy(About $about){
+    public function destroy(About $about)
+    {
+        $this->authorizeProfileRecord($about);
         $about->delete();
-        return Redirect()->route('about.index');
+
+        return redirect()->route('about.index')->with('success', 'Resumo removido com sucesso.');
     }
 }
