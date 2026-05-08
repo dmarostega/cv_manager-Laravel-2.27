@@ -4,7 +4,7 @@
 
 @section('content')
 @php
-    $displayName = $user->name ?? ($person->name ?? 'Seu nome');
+    $displayName = $person->name ?? ($user->name ?? 'Seu nome');
     $headline = $profile->title ?? 'Profissional em evolução';
     $summary = $about->text ?? 'Cadastre seu resumo profissional no painel administrativo para publicar uma apresentação objetiva sobre sua carreira.';
     $publicUrl = $profile ? route('public.resume', $profile) : url('/');
