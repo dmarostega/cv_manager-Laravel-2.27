@@ -13,7 +13,7 @@ class AddIsMainAboutTable extends Migration
      */
     public function up()
     {
-        Schema::table('Abouts', function (Blueprint $table) {
+        Schema::table('abouts', function (Blueprint $table) {
             $table->tinyInteger('is_main')->default(1);
         });
     }
@@ -25,7 +25,7 @@ class AddIsMainAboutTable extends Migration
      */
     public function down()
     {
-        Schema::table('Abouts', function (Blueprint $table) {
+        Schema::table('abouts', function (Blueprint $table) {
             $table->dropColumn('is_main');
             //
         });

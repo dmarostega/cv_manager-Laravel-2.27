@@ -21,7 +21,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="title">Title</span>
                         </div>
-                        <input class="form-control" type="text" title="title" placeholder="My title" aria-label="My title" aria-describedby="title" value="{{ $profile->title }}">
+                        <input class="form-control" type="text" name="title" placeholder="My title" aria-label="My title" aria-describedby="title" value="{{ $profile->title }}">
                     </div>
                 </div> 
                 <div class="form-group">
@@ -45,7 +45,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="profile-birthday">Birthday</span>
                         </div>
-                        <input class="form-control" type="text" name="birthday" aria-describedby="profile-birthday" value="{{ $person->birthday->toDateString() }}">
+                        <input class="form-control" type="date" name="birthday" aria-describedby="profile-birthday" value="{{ optional($person->birthday)->toDateString() }}">
                     </div>
                 </div>      
                 <div class="form-group">
@@ -53,7 +53,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="profile-phone">Phone</span>
                         </div>
-                        <input class="form-control" type="text" name="phone"  aria-describedby="profile-phone" value="{{ ( $phone !== null ? $phone->number : '' ) }}">
+                        <input class="form-control" type="text" name="phone"  aria-describedby="profile-phone" value="{{ $phone !== null ? trim(($phone->area_code ?? '') . ($phone->number ?? '')) : '' }}">
                     </div>
                 </div>        
             </div>            
@@ -149,6 +149,6 @@
                 </div>
             </div>
         </div> 
-        <input type="submit" value="Salvar">
+        <button type="submit" class="btn btn-primary">Salvar perfil</button>
     </form>
 @endsection

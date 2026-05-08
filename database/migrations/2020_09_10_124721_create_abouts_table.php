@@ -21,7 +21,7 @@ class CreateAboutsTable extends Migration
             $table->string('image',125);
             $table->timestamps();
 
-            $table->foreign('profile_id')->references('id')->on('profile');
+            $table->foreign('profile_id')->references('id')->on('profiles');
 
         });
     }
@@ -34,7 +34,7 @@ class CreateAboutsTable extends Migration
     public function down()
     {
         Schema::table('abouts', function (Blueprint $table) {
-            $table->dropForeign('profile_id');
+            $table->dropForeign(['profile_id']);
         });
         
         Schema::dropIfExists('abouts');

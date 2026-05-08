@@ -14,7 +14,7 @@ class AddPeopleForeingKeyToUser extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('person_id')->unsigned();
+            $table->unsignedBigInteger('person_id');
             $table->foreign('person_id')->references('id')->on('people');            
         });
     }

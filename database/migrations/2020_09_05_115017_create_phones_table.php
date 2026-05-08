@@ -15,8 +15,8 @@ class CreatePhonesTable extends Migration
     {
         Schema::create('phones', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('phone_type_id');
-            $table->unsignedInteger('profile_id');
+            $table->unsignedBigInteger('phone_type_id');
+            $table->unsignedBigInteger('profile_id');
 
             $table->integer('country_code')->default('55');
             $table->integer('area_code');
@@ -38,8 +38,8 @@ class CreatePhonesTable extends Migration
     public function down()
     {
         Schema::table('phones', function (Blueprint $table) {
-           $table->dropForeign('phone_type_id');
-           $table->dropForeign('profile_id');
+           $table->dropForeign(['phone_type_id']);
+           $table->dropForeign(['profile_id']);
         });
         
         Schema::dropIfExists('phones');

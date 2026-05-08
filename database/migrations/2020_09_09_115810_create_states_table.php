@@ -20,7 +20,7 @@ class CreateStatesTable extends Migration
             $table->string('initials',10);
             $table->timestamps();
 
-            $table->foreign('country_id')->references('countries')->on('id');
+            $table->foreign('country_id')->references('id')->on('countries');
         });
     }
 
@@ -32,7 +32,7 @@ class CreateStatesTable extends Migration
     public function down()
     {
         Schema::table('states', function (Blueprint $table) {
-            $table->dropForeign('country_id');
+            $table->dropForeign(['country_id']);
         });
         
         Schema::dropIfExists('states');

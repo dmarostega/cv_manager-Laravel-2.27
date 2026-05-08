@@ -21,7 +21,7 @@ class CreateEmailsTable extends Migration
             $table->tinyInteger(('is_main'))->default(0);
             $table->timestamps();
             
-            $table->foreign('profile_id')->references('id')->on('profile');
+            $table->foreign('profile_id')->references('id')->on('profiles');
         });
     }
 
@@ -33,7 +33,7 @@ class CreateEmailsTable extends Migration
     public function down()
     {
         Schema::table('emails', function (Blueprint $table) {
-            $table->dropForeign('profile_id');
+            $table->dropForeign(['profile_id']);
         });
         Schema::dropIfExists('emails');
     }

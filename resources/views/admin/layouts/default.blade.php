@@ -2,7 +2,8 @@
 @push('styles')
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome --> <!-- AMD --> <!-- Theme style --> <!-- AMD --> <!-- icheck bootstrap -->   <!-- my custom.css from AdminLTE -->
-    <link rel="stylesheet" href="{{ URL::asset('panel/css/adminlte.min.css') }}">      
+    <link rel="stylesheet" href="{{ URL::asset('panel/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('panel/css/cv-admin-modern.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Google Font: Source Sans Pro -->
@@ -26,11 +27,11 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Admin</a></li>
               <li class="breadcrumb-item active">@yield('title')</li>
             </ol>
           </div><!-- /.col -->
-        </div><!-- /.row -->     
+        </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
@@ -40,6 +41,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-12">
+                @include('admin.includes.alerts')
                 @yield('content')
           </div>
           <!-- /.col-md-6 -->

@@ -13,7 +13,7 @@ class AlterDefaultImageAboutTable extends Migration
      */
     public function up()
     {
-        Schema::table('Abouts', function (Blueprint $table) {
+        Schema::table('abouts', function (Blueprint $table) {
             $table->string('image',125)->nullable()->change();
         });
     }
@@ -25,7 +25,7 @@ class AlterDefaultImageAboutTable extends Migration
      */
     public function down()
     {
-        Schema::table('Abouts', function (Blueprint $table) {
+        Schema::table('abouts', function (Blueprint $table) {
             //
         });
     }

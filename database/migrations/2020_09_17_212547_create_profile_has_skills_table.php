@@ -21,7 +21,7 @@ class CreateProfileHasSkillsTable extends Migration
             $table->double('knowledge_percent')->default(0.0)->nullable();
             $table->timestamps();
 
-            $table->foreign('profile_id')->references('id')->on('profile');
+            $table->foreign('profile_id')->references('id')->on('profiles');
             $table->foreign('skill_id')->references('id')->on('skills');
         });
     }
@@ -34,8 +34,8 @@ class CreateProfileHasSkillsTable extends Migration
     public function down()
     {
         Schema::table('profile_has_skills', function (Blueprint $table) {
-            $table->dropForeign('profile_id');
-            $table->dropForeign('skillphp _id');
+            $table->dropForeign(['profile_id']);
+            $table->dropForeign(['skill_id']);
         });
         Schema::dropIfExists('profile_has_skills');
     }
