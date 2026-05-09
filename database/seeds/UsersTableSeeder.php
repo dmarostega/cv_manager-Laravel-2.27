@@ -42,12 +42,5 @@ class UsersTableSeeder extends Seeder
                 ]);
             });
 
-        /*
-            User::create([
-                'name' => "Administrador",
-                'email' => 'dmarostega@gmail.com',
-                'password' => bcrypt('123123')
-            ]);
-        */
     }
 }
